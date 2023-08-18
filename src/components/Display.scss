@@ -1,0 +1,13 @@
+@import '../styles/variables';
+
+.calc-display {
+    height: $display-height;
+    width: 100%;
+    background-color: #222;
+    color: #008000;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,13 @@
+@import '../styles/variables';
+@import '../styles/animations';
+
+.calc-button {
+    width: 30%;
+    height: calc(100% - $display-height) / 6;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $secondary-color;
+}
