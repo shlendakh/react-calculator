@@ -2,3 +2,9 @@
 @import 'variables';
 @import 'base';
 @import 'animations';
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

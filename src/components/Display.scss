@@ -11,3 +11,9 @@
     justify-content: center;
     align-items: center;
 }
+
+@media only screen and (max-height: 500px) {
+    .calc-display {
+        height: calc($display-height / 2);
+    }
+}

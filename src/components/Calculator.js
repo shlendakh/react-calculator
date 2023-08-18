@@ -4,21 +4,18 @@ import Display from './Display';
 import './Calculator.scss';
 
 const Calculator = () => {
+    // State for the calculator's input and output
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('0');
     const [lastCalculationResult, setLastCalculationResult] = useState(null);
 
+    // Event listener for keyboard input
     useEffect(() => {
-        // Funkcja obsługująca zdarzenia klawiatury
         const handleKeyPress = (e) => {
             if ("0123456789".includes(e.key)) {
                 handleNumberClick(e.key);
             } else if (['/', '*', '-', '+', '='].includes(e.key)) {
-                if (e.key !== '=') {
-                    handleOperatorClick(e.key);
-                } else {
-                    handleEqualClick();
-                }
+                e.key !== '=' ? handleOperatorClick(e.key) : handleEqualClick();
             } else if (e.key === 'Enter') {
                 handleEqualClick();
             } else if (e.key === '.' && !input.includes('.')) {
@@ -28,22 +25,22 @@ const Calculator = () => {
             }
         };
 
-        // Dodaj nasłuchiwacz
         window.addEventListener('keydown', handleKeyPress);
-
-        // Czyść nasłuchiwacz przy odmontowywaniu
+        
+        // Cleanup the event listener
         return () => {
             window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [input]); // Reaguj na zmiany w zmiennej `input
+    }, [input]);
 
+    // Handle number input
     const handleNumberClick = (number) => {
-        // User Story #10: Nie pozwól na początek liczby z wieloma zerami
         if (!(input === '0' && number === '0')) {
             setInput((prev) => prev + number);
         }
     };
 
+    // Handle operators
     const handleOperatorClick = (operator) => {
         if (input === '') {
             if (lastCalculationResult && operator !== '-') {
@@ -60,24 +57,24 @@ const Calculator = () => {
 
         if (operator === '-') {
             if (['+', '*', '/'].includes(lastChar)) {
-                setInput(prev => prev + operator); // Start of negative number
+                setInput(prev => prev + operator);
             } else if (lastTwoChars !== '--') {
-                setInput(prev => prev + operator); // Regular subtraction or negative number
+                setInput(prev => prev + operator);
             }
         } else {
-            // Replace any sequence of operators at the end with the current operator
             let modifiedInput = input.replace(/[+\-*/]+$/, '');
             setInput(modifiedInput + operator);
         }
     };
 
+    // Handle decimal input
     const handleDecimalClick = () => {
-        // User Story #11: Nie akceptuj dwóch kropek w jednej liczbie
         if (!input.split(/[\+\-\*\/]/).pop().includes('.')) {
             setInput((prev) => prev + '.');
         }
     };
 
+    // Evaluate the expression
     const handleEqualClick = () => {
         try {
             const result = eval(input);
@@ -89,6 +86,7 @@ const Calculator = () => {
         }
     };
 
+    // Clear the calculator's input and output
     const handleClear = () => {
         setInput('');
         setOutput('0');
